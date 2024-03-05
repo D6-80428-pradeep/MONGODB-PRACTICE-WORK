@@ -702,4 +702,177 @@ mongo_practice> db.boom.find().pretty()
     date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
   }
 ]
+mongo_practice> db.boom.update({title:'Post two'},{$inc:{likes:5}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mongo_practice> db.boom.find().pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'bot 2',
+    category: 'ology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)',
+    likes: 5
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.update({title:'Post two'},{$inc:{likes:8}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mongo_practice> db.boom.find().pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'bot 2',
+    category: 'ology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)',
+    likes: 13
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.remove({category:'body of lies'})
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 0 }
+mongo_practice> db.boom.deleteOne({category:'body of lies'})
+{ acknowledged: true, deletedCount: 0 }
+mongo_practice> db.boom.find({user:{$elemMatch:{status:'author'}}})
+
+mongo_practice> db.boom.find({tags:{$elemMatch:{'news'}}})
+Uncaught:
+SyntaxError: Unexpected token (1:38)
+
+> 1 | db.boom.find({tags:{$elemMatch:{'news'}}})
+    |                                       ^
+  2 |
+
+mongo_practice> db.boom.find({tags:{$elemMatch:{'news'}}})
+Uncaught:
+SyntaxError: Unexpected token (1:38)
+
+> 1 | db.boom.find({tags:{$elemMatch:{'news'}}})
+    |                                       ^
+  2 |
+
+mongo_practice> db.boom.find({tags:{$elemMatch:'news'}})
+MongoServerError: $elemMatch needs an Object
+mongo_practice> db.boom.find({$elemMatch:{tags:'news'}})
+MongoServerError: unknown top level operator: $elemMatch. If you have a field name that starts with a '$' symbol, consider using $getField or $setField.
+mongo_practice> db.boom.find({$elemMatch:{tags:'news'}})
+MongoServerError: unknown top level operator: $elemMatch. If you have a field name that starts with a '$' symbol, consider using $getField or $setField.
+mongo_practice> db.boom.find({likes:{$gt:4}})
+[
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'bot 2',
+    category: 'ology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)',
+    likes: 13
+  }
+]
+mongo_practice> db.boom.find({likes:{$gte:13}})
+[
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'bot 2',
+    category: 'ology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)',
+    likes: 13
+  }
+]
+mongo_practice> db.boom.find({likes:{$lt:13}})
+
+mongo_practice> db.boom.find({likes:{$lt:16}})
+[
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'bot 2',
+    category: 'ology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)',
+    likes: 13
+  }
+]
+mongo_practice> db.boom.find({likes:{$lte:16}})
+[
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'bot 2',
+    category: 'ology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)',
+    likes: 13
+  }
+]
 mongo_practice>
