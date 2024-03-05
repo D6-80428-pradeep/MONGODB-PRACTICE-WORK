@@ -1,0 +1,705 @@
+Microsoft Windows [Version 10.0.22631.3235]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\prade>mongosh
+Current Mongosh Log ID: 65e6daa44e2bd7f71517de85
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.1
+Using MongoDB:          7.0.4
+Using Mongosh:          2.1.1
+mongosh 2.1.3 is available for download: https://www.mongodb.com/try/download/shell
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-03-04T16:59:33.603+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin    48.00 KiB
+cdac    144.00 KiB
+config   60.00 KiB
+local    96.00 KiB
+test> db
+test
+test> use cdac
+switched to db cdac
+cdac> use mongo_practice
+switched to db mongo_practice
+mongo_practice> db.dropDatabase()
+{ ok: 1, dropped: 'mongo_practice' }
+mongo_practice> db
+mongo_practice
+mongo_practice> show dbs
+admin    48.00 KiB
+cdac    144.00 KiB
+config   60.00 KiB
+local    96.00 KiB
+mongo_practice> use mongo_practice
+already on db mongo_practice
+mongo_practice> db.createCollections('work')
+TypeError: db.createCollections is not a function
+mongo_practice> db.createCollection('work')
+{ ok: 1 }
+mongo_practice> show collections
+work
+mongo_practice> db.dropDatabase()
+{ ok: 1, dropped: 'mongo_practice' }
+mongo_practice> show collections
+
+mongo_practice> drop mongo_practice
+Uncaught:
+SyntaxError: Missing semicolon. (1:4)
+
+> 1 | drop mongo_practice
+    |     ^
+  2 |
+
+mongo_practice> drop db.mongo_practice
+Uncaught:
+SyntaxError: Missing semicolon. (1:4)
+
+> 1 | drop db.mongo_practice
+    |     ^
+  2 |
+
+mongo_practice> drop;mongo_practice
+ReferenceError: drop is not defined
+mongo_practice> db.dropmongo_practice
+mongo_practice.dropmongo_practice
+mongo_practice> mongo_practice.dropmongo_practice
+ReferenceError: mongo_practice is not defined
+mongo_practice> mongo_practice.drop
+ReferenceError: mongo_practice is not defined
+mongo_practice> use cdac
+switched to db cdac
+cdac> mongo_practice.drop
+ReferenceError: mongo_practice is not defined
+cdac> show dbs
+admin    48.00 KiB
+cdac    144.00 KiB
+config   72.00 KiB
+local    96.00 KiB
+cdac> use mongo_practice
+switched to db mongo_practice
+mongo_practice> show collections
+
+mongo_practice> db.createCollection('boom')
+{ ok: 1 }
+mongo_practice> db.boom.insert({title:'post one',body:'body of post one',category:'news',tags:['news','events',],user:{name:'pradeep singh',status:'author'},date:Date()})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('65e6df9f4e2bd7f71517de86') }
+}
+mongo_practice> db.boom.insertMany([{
+... db.boom.insert({title:'post one',body:'body of post one',category:'news',tags:['news','events',],user:{name:'pradeep singh',status:'author'},date:Date()})
+mongo_practice> db.boom.insertMany([
+... {
+... title:'Post two',
+... body:'body of lies',
+... category:'technology',
+... date:Date()
+... }])
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('65e6e03e4e2bd7f71517de87') }
+}
+mongo_practice> db.boom.insertMany([ { title: 'Post two', body: 'body of lies', category: 'technology', date: Date() }])
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('65e6e0474e2bd7f71517de88') }
+}
+mongo_practice> db.boom.insertMany([ { title: 'Post two', body: 'body of lies', category: 'technology', date: Date()  }])
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('65e6e0554e2bd7f71517de89') }
+}
+mongo_practice> db.boom.insertMany([ { title: 'Post two', body: 'body of lies', category: 'technology', date: Date()  }])
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('65e6e05f4e2bd7f71517de8a') }
+}
+mongo_practice> show boom
+MongoshInvalidInputError: [COMMON-10001] 'boom' is not a valid argument for"show".
+mongo_practice> find boom
+Uncaught:
+SyntaxError: Missing semicolon. (1:4)
+
+> 1 | find boom
+    |     ^
+  2 |
+
+mongo_practice> db.boom.find().pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find({body:'body of post one'})
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().sort({title:1})
+[
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().sort({title:-1})
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().count()
+5
+mongo_practice> db.boom.find({catrgory:'technology'}).count()
+0
+mongo_practice> db.boom.find({catergory:'technology'}).count()
+0
+mongo_practice> db.boom.find({category:'technology'}).count()
+4
+mongo_practice> db.boom.find({category:'news'}).count()
+1
+mongo_practice> db.boom.find({category:'news'}).count()
+1
+mongo_practice> show dbs
+admin            48.00 KiB
+cdac            144.00 KiB
+config          108.00 KiB
+local            96.00 KiB
+mongo_practice   72.00 KiB
+mongo_practice> db
+mongo_practice
+mongo_practice> db.boom.find().limit(2).pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().limit(1).pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().limit(5).pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().limit(7).pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().limit(8).pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().limit(4).sort({date:1}).pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.find().limit(4).sort({date:-1}).pretty()
+[
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.findOne({category:'technology'}).pretty()
+TypeError: db.boom.findOn ... ogy'}).pretty is not a function
+mongo_practice> db.boom.findOne({category:'technology'})
+{
+  _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+  title: 'Post two',
+  body: 'body of lies',
+  category: 'technology',
+  date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+}
+mongo_practice> db.boom.find().forEach(function(doc){print("blog post:"+ doc.title)})
+blog post:post one
+blog post:Post two
+blog post:Post two
+blog post:Post two
+blog post:Post two
+
+mongo_practice> db.boom.find({title:'post one'},{title:1,author:1})
+[ { _id: ObjectId('65e6df9f4e2bd7f71517de86'), title: 'post one' } ]
+mongo_practice> db.boom.find({title:'post one'},{title:1})
+[ { _id: ObjectId('65e6df9f4e2bd7f71517de86'), title: 'post one' } ]
+mongo_practice> db.boom.find({title:'post one'},{title:2,author:1})
+[ { _id: ObjectId('65e6df9f4e2bd7f71517de86'), title: 'post one' } ]
+mongo_practice> db.boom.find({title:'post two'},{title:1})
+
+mongo_practice> db.boom.find({title:'post two'},{title:4,author:1})
+
+mongo_practice> db.boom.find({title:'post two'},{title:3,author:1})
+
+mongo_practice> db.boom.update({title:'post two'},)
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+MongoshInvalidInputError: [COMMON-10001] Missing required argument at position 1 (Collection.update)
+mongo_practice> db.boom.update({title:'post two'},{title:'post two',body:'hello',date:Date()}{upsert:true})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:77)
+
+> 1 | db.boom.update({title:'post two'},{title:'post two',body:'hello',date:Date()}{upsert:true})
+    |
+       ^
+  2 |
+
+mongo_practice> db.boom.update({title:'post two'},{title:'post two',body:'hello',date:Date()},{upsert:true})
+MongoInvalidArgumentError: Update document requires atomic operators
+mongo_practice> db.boom.update({title:'post two'},{title:'post two',body:'hello',date:Date()})
+MongoInvalidArgumentError: Update document requires atomic operators
+mongo_practice> db.boom.update({title:'post two'},{$set:{title:'post two',body:'hello',date:Date()}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+mongo_practice> db.boom.find().pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice> db.boom.update({title:'post two'},{$set:{body:'body for post 2',category:'Technology'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+mongo_practice> db.boom.update({title:'post two'},{$set:{body:'body for post 2',category:'ology'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+mongo_practice> db.boom.update({title:'post two'},{$set:{body:'bot 2',category:'ology'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+mongo_practice> db.boom.update({title:'Post two'},{$set:{body:'bot 2',category:'ology'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mongo_practice> db.boom.find().pretty()
+[
+  {
+    _id: ObjectId('65e6df9f4e2bd7f71517de86'),
+    title: 'post one',
+    body: 'body of post one',
+    category: 'news',
+    tags: [ 'news', 'events' ],
+    user: { name: 'pradeep singh', status: 'author' },
+    date: 'Tue Mar 05 2024 14:32:23 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e03e4e2bd7f71517de87'),
+    title: 'Post two',
+    body: 'bot 2',
+    category: 'ology',
+    date: 'Tue Mar 05 2024 14:35:02 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0474e2bd7f71517de88'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:11 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e0554e2bd7f71517de89'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:25 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId('65e6e05f4e2bd7f71517de8a'),
+    title: 'Post two',
+    body: 'body of lies',
+    category: 'technology',
+    date: 'Tue Mar 05 2024 14:35:35 GMT+0530 (India Standard Time)'
+  }
+]
+mongo_practice>
